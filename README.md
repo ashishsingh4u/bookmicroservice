@@ -15,9 +15,9 @@
 
 ## Profiling Command
 
-- `http://localhost:6060/debug/pprof/heap`
-- `http://localhost:6060/debug/pprof/block`
-- `http://localhost:6060/debug/pprof/mutex`
+- `http://localhost:8080/debug/pprof/heap`
+- `http://localhost:8080/debug/pprof/block`
+- `http://localhost:8080/debug/pprof/mutex`
 - `https://go.dev/blog/pprof`
 
 ## Debug Server
