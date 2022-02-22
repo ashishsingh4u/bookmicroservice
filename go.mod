@@ -3,12 +3,15 @@ module github.com/ashishsingh4u/bookmicroservice
 go 1.17
 
 require (
+	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.7.7
+	github.com/tkanos/gonfig v0.0.0-20210106201359-53e13348de2f
 	gorm.io/driver/sqlite v1.3.1
 	gorm.io/gorm v1.23.1
 )
 
 require (
+	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

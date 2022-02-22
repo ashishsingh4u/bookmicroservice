@@ -70,15 +70,15 @@ func UpdateBook(ctx *gin.Context) {
 
 // DELETE /books/:id
 // Delete a book
-func DeleteBook(c *gin.Context) {
+func DeleteBook(ctx *gin.Context) {
 	// Get model if exist
 	var book models.Book
-	if err := models.DB.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
 
 	models.DB.Delete(&book)
 
-	c.JSON(http.StatusOK, gin.H{"data": true})
+	ctx.JSON(http.StatusOK, gin.H{"data": true})
 }
