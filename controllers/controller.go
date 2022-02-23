@@ -4,14 +4,21 @@ import (
 	"net/http"
 
 	"github.com/ashishsingh4u/bookmicroservice/models"
+	"github.com/ashishsingh4u/bookmicroservice/repository"
 	"github.com/gin-gonic/gin"
 )
+
+var repo repository.BookRepoInterface = &repository.BookRepository{}
 
 // GET /books
 // Get all books
 func FindBooks(ctx *gin.Context) {
 	var books []models.Book
-	models.DB.Find(&books)
+
+	if err := repo.GetBooks(&books); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{"data": books})
 }
@@ -27,8 +34,11 @@ func CreateBook(ctx *gin.Context) {
 	}
 
 	// Create book
-	book := models.Book{Title: input.Title, Author: input.Author}
-	models.DB.Create(&book)
+	var book models.Book
+	if err := repo.CreateBook(&input, &book); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{"data": book})
 }
@@ -38,8 +48,9 @@ func CreateBook(ctx *gin.Context) {
 func FindBook(ctx *gin.Context) { // Get model if exist
 	var book models.Book
 
-	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+	bookId := ctx.Param("id")
+	if err := repo.GetBook(bookId, &book); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -49,13 +60,6 @@ func FindBook(ctx *gin.Context) { // Get model if exist
 // PATCH /books/:id
 // Update a book
 func UpdateBook(ctx *gin.Context) {
-	// Get model if exist
-	var book models.Book
-	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-
 	// Validate input
 	var input models.UpdateBookInput
 	if err := ctx.ShouldBindJSON(&input); err != nil {
@@ -63,7 +67,11 @@ func UpdateBook(ctx *gin.Context) {
 		return
 	}
 
-	models.DB.Model(&book).Updates(&models.Book{Title: input.Title, Author: input.Author})
+	var book models.Book
+	if code, err := repo.UpdateBook(ctx.Param("id"), &input, &book); err != nil {
+		ctx.JSON(code, gin.H{"error": err.Error()})
+		return
+	}
 
 	ctx.JSON(http.StatusOK, gin.H{"data": book})
 }
@@ -71,14 +79,11 @@ func UpdateBook(ctx *gin.Context) {
 // DELETE /books/:id
 // Delete a book
 func DeleteBook(ctx *gin.Context) {
-	// Get model if exist
-	var book models.Book
-	if err := models.DB.Where("id = ?", ctx.Param("id")).First(&book).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+
+	if err := repo.DeleteBook(ctx.Param("id")); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	models.DB.Delete(&book)
-
-	ctx.JSON(http.StatusOK, gin.H{"data": true})
+	ctx.JSON(http.StatusOK, gin.H{"data": "book deleted"})
 }
