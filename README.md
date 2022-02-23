@@ -20,6 +20,11 @@
 - `http://localhost:8080/debug/pprof/mutex`
 - `https://go.dev/blog/pprof`
 
+## Upgrade dependencies
+
+- `go get -u`
+- `go mod tidy`
+
 ## Debug Server
 
 - Create launch.json with following content
