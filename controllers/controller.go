@@ -84,7 +84,7 @@ func FindBook(ctx *gin.Context) { // Get model if exist
 }
 
 // @BasePath /v1
-// CreateBook godoc
+// UpdateBook godoc
 // @Summary Update a book
 // @Schemes
 // @Description Update a book
@@ -113,7 +113,7 @@ func UpdateBook(ctx *gin.Context) {
 }
 
 // @BasePath /v1
-// FindBook godoc
+// DeleteBook godoc
 // @Summary Delete book
 // @Schemes
 // @Description Delete book
