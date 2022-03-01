@@ -8,9 +8,12 @@ import (
 
 	"github.com/ashishsingh4u/bookmicroservice/config"
 	"github.com/ashishsingh4u/bookmicroservice/controllers"
+	docs "github.com/ashishsingh4u/bookmicroservice/docs"
 	"github.com/ashishsingh4u/bookmicroservice/models"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -68,12 +71,16 @@ func main() {
 	// Grouping
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/books", controllers.FindBooks)
+		v1.GET("/books", controllers.GetBooks)
 		v1.POST("/books", controllers.CreateBook)
 		v1.GET("/books/:id", controllers.FindBook)
 		v1.PATCH("/books/:id", controllers.UpdateBook)
 		v1.DELETE("/books/:id", controllers.DeleteBook)
 	}
+
+	// Swagger related declarations
+	docs.SwaggerInfo.BasePath = "/v1"
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	router.Run(machineIP)
 }

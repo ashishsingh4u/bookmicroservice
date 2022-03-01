@@ -25,6 +25,14 @@
 - `go get -u`
 - `go mod tidy`
 
+## Swagger Support
+
+- `go get -u github.com/swaggo/swag/cmd/swag`
+- `../../bin/swag init`
+- `go get -u github.com/swaggo/gin-swagger`
+- `go get -u github.com/swaggo/files`
+- `http://localhost:8080/swagger/index.html`
+
 ## Debug Server
 
 - Create launch.json with following content

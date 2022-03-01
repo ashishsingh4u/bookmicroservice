@@ -10,9 +10,17 @@ import (
 
 var repo repository.BookRepoInterface = &repository.BookRepository{}
 
-// GET /books
-// Get all books
-func FindBooks(ctx *gin.Context) {
+// @BasePath /v1
+// GetBooks godoc
+// @Summary Get details of all books
+// @Schemes
+// @Description Get details of all books
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Book
+// @Router /books [get]
+func GetBooks(ctx *gin.Context) {
 	var books []models.Book
 
 	if err := repo.GetBooks(&books); err != nil {
@@ -20,11 +28,20 @@ func FindBooks(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"data": books})
+	ctx.JSON(http.StatusOK, gin.H{"books": books})
 }
 
-// POST /books
-// Create new book
+// @BasePath /v1
+// CreateBook godoc
+// @Summary Creates book entry
+// @Schemes
+// @Description Creates book entry
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Param book body models.CreateBookInput true "Create book"
+// @Success 200 {} models.Book
+// @Router /books [post]
 func CreateBook(ctx *gin.Context) {
 	// Validate input
 	var input models.CreateBookInput
@@ -40,11 +57,20 @@ func CreateBook(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+	ctx.JSON(http.StatusOK, gin.H{"book": book})
 }
 
-// GET /books/:id
-// Find a book
+// @BasePath /v1
+// FindBook godoc
+// @Summary Find book
+// @Schemes
+// @Description Find book
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID of the book"
+// @Success 200 {} models.Book
+// @Router /books/{id} [get]
 func FindBook(ctx *gin.Context) { // Get model if exist
 	var book models.Book
 
@@ -54,11 +80,21 @@ func FindBook(ctx *gin.Context) { // Get model if exist
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+	ctx.JSON(http.StatusOK, gin.H{"book": book})
 }
 
-// PATCH /books/:id
-// Update a book
+// @BasePath /v1
+// CreateBook godoc
+// @Summary Update a book
+// @Schemes
+// @Description Update a book
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID of the book"
+// @Param book body models.UpdateBookInput true "Update book"
+// @Success 200 {} models.Book
+// @Router /books/{id} [patch]
 func UpdateBook(ctx *gin.Context) {
 	// Validate input
 	var input models.UpdateBookInput
@@ -73,11 +109,20 @@ func UpdateBook(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"data": book})
+	ctx.JSON(http.StatusOK, gin.H{"book": book})
 }
 
-// DELETE /books/:id
-// Delete a book
+// @BasePath /v1
+// FindBook godoc
+// @Summary Delete book
+// @Schemes
+// @Description Delete book
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID of the book"
+// @Success 200
+// @Router /books/{id} [delete]
 func DeleteBook(ctx *gin.Context) {
 
 	if err := repo.DeleteBook(ctx.Param("id")); err != nil {
