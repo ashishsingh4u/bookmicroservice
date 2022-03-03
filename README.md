@@ -15,9 +15,9 @@
 
 ## Profiling Command
 
-- `http://localhost:8080/debug/pprof/heap`
-- `http://localhost:8080/debug/pprof/block`
-- `http://localhost:8080/debug/pprof/mutex`
+- `go tool pprof http://localhost:8080/debug/pprof/heap`
+- `go tool pprof http://localhost:8080/debug/pprof/block`
+- `go tool pprof http://localhost:8080/debug/pprof/mutex`
 - `https://go.dev/blog/pprof`
 
 ## Upgrade dependencies
@@ -32,6 +32,10 @@
 - `go get -u github.com/swaggo/gin-swagger`
 - `go get -u github.com/swaggo/files`
 - `http://localhost:8080/swagger/index.html`
+
+## Docker Support
+
+- `docker build -t bookmicroservice .`
 
 ## Debug Server
 

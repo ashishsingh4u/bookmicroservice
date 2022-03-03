@@ -51,12 +51,15 @@ func main() {
 	// with router := gin.Default(). Use gin.New() to start router with no middleware attached
 	// and then use specific middleware like logger or Recovery
 	// router.Use(gin.Recovery())
+	var conf config.Configuration
+	if err := config.GetConfig(&conf); err != nil {
+		panic(fmt.Sprintf("Couldn't read the configuration file. Error: %s", err.Error()))
+	}
 
-	config := config.GetConfig()
-	machineIP := fmt.Sprintf("%s:%s", config.SERVER_IP, config.PORT)
+	machineIP := fmt.Sprintf("%s:%s", conf.SERVER_IP, conf.PORT)
 	log.Printf("Server will be starting on %s\n", machineIP)
 
-	router.SetTrustedProxies([]string{config.SERVER_IP})
+	router.SetTrustedProxies([]string{conf.SERVER_IP})
 
 	router.GET("/", func(ctx *gin.Context) {
 		// If the client is 192.168.86.22, use the X-Forwarded-For
@@ -79,6 +82,7 @@ func main() {
 	}
 
 	// Swagger related declarations
+	// This adds some extra memory overhead (20 MB)
 	docs.SwaggerInfo.BasePath = "/v1"
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 

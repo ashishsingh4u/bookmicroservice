@@ -11,8 +11,7 @@ type Configuration struct {
 	PORT      string
 }
 
-func GetConfig(params ...string) (config Configuration) {
-	config = Configuration{}
+func GetConfig(config *Configuration, params ...string) (err error) {
 
 	env := "dev"
 
@@ -22,7 +21,7 @@ func GetConfig(params ...string) (config Configuration) {
 
 	fileName := fmt.Sprintf("./config/%s_config.yaml", env)
 
-	gonfig.GetConf(fileName, &config)
+	err = gonfig.GetConf(fileName, config)
 
 	return
 }
