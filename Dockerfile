@@ -7,7 +7,7 @@ RUN go build -o /go/bin/bookmicroservice
 
 FROM alpine:latest
 # RUN apk --no-cache add curl
-WORKDIR app
+WORKDIR /app
 COPY --from=GO_BUILD /go/bin/bookmicroservice/ ./
 EXPOSE 8080
 CMD ./bookmicroservice
