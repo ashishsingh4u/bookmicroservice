@@ -40,7 +40,7 @@ func GetBooks(ctx *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param book body models.CreateBookInput true "Create book"
-// @Success 200 {} models.Book
+// @Success 201 {} models.Book
 // @Router /books [post]
 func CreateBook(ctx *gin.Context) {
 	// Validate input
@@ -57,7 +57,7 @@ func CreateBook(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"book": book})
+	ctx.JSON(http.StatusCreated, gin.H{"book": book})
 }
 
 // @BasePath /v1
