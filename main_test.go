@@ -53,9 +53,9 @@ func TestCreateBookMethod(t *testing.T) {
 
 	// Check to see if the response was what you expected
 	if w.Code == http.StatusCreated {
-		t.Logf("Expected to get status %d is same ast %d\n", http.StatusOK, w.Code)
+		t.Logf("Expected to get status %d is same ast %d\n", http.StatusCreated, w.Code)
 	} else {
-		t.Fatalf("Expected to get status %d but instead got %d\n", http.StatusOK, w.Code)
+		t.Fatalf("Expected to get status %d but instead got %d\n", http.StatusCreated, w.Code)
 	}
 }
 
