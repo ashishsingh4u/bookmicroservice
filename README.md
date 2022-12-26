@@ -1,5 +1,11 @@
 # Book Store Microservice in GO
 
+## Create new project
+
+- `mkdir -p bookmicroservice`
+- `cd bookmicroservice`
+- `go mod init bookmicroservice`
+
 ## Dependencies
 
 - `go get -u github.com/gin-gonic/gin`
